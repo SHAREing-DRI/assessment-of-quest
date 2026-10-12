@@ -158,20 +158,20 @@ For a high-level analysis of the intra-node performance, we perform a strong sca
 The 80% threshold is at `<p_80>` cores and the 60% threshold is at `<p_60>` cores. As a proportion of the number of cores available on the node i.e. `<num_cores_per_node>`, the scores are:
 
 $$
-C^{80\%}_{intra}=\frac{p^{80\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\_80>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_80}\%
+C^{80\\\%}_{intra}=\frac{p^{80\\\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\\\_80>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_80}\\\%
 $$
 
 and
 
 $$
-C^{60\%}_{intra}=\frac{p^{60\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\_60>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_60}\%
+C^{60\\\%}_{intra}=\frac{p^{60\\\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\\\_60>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_60}\\\%
 $$
 
 | Efficiency                                                 | Description | Score |
 | ---------------------------------------------------------- | ----------- | ----- |
-| $C^{80\%}_{intra} \ge$ 0.8                                 | <span style="background-color: #0080005f">Shared memory scaling does not require further analysis.</span> |   |
-| $C^{80\%}_{intra} \lt$ 0.8 ^ $C^{60\%}_{intra} \ge$ 0.6    | <span style="background-color: #ffff005c">Shared memory scaling may require analysis; scaling performance may be impacted when porting to newer chips with more cores.</span> |   |
-| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\%}_{intra} \approx$ `<c_80>` & $C^{60\%}_{intra} \approx$ `<c_60>`|
+| $C^{80\\\%}_{intra} \ge$ 0.8                                 | <span style="background-color: #0080005f">Shared memory scaling does not require further analysis.</span> |   |
+| $C^{80\\\%}_{intra} \lt$ 0.8 ^ $C^{60\\\%}_{intra} \ge$ 0.6    | <span style="background-color: #ffff005c">Shared memory scaling may require analysis; scaling performance may be impacted when porting to newer chips with more cores.</span> |   |
+| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\\\%}_{intra} \approx$ `<c_80>` & $C^{60\\\%}_{intra} \approx$ `<c_60>`|
 
 > [!IMPORTANT]
 > Place the intra-node score in the correct range. Contextualise and elaborate on the classification of the score.
@@ -205,19 +205,19 @@ The inter-node performance is measured using a combination of strong and weak sc
 At `<N_example>` nodes, the parallel efficiency fell below 60% and so the problem size was doubled. The 80% threshold is at `<p_80>` cores and the 60% threshold is at `<p_60>` cores. As a proportion of the number of cores available on the node i.e. `<num_cores_per_node>`, the scores are:
 
 $$
-C^{80\%}_{inter}=\frac{p^{80\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\_80>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_80}\%
+C^{80\\\%}_{inter}=\frac{p^{80\\\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\\\_80>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_80}\\\%
 $$
 
 and
 
 $$
-C^{60\%}_{inter}=\frac{p^{60\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\_60>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_60}\%
+C^{60\\\%}_{inter}=\frac{p^{60\\\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\\\_60>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_60}\\\%
 $$
 
 | Efficiency | Description | Score |
 | ---------- | ----------- | ----- |
-| $C^{80\%}_{inter} \ge$ 0.8 $.C_{inter}$ ^ $C^{80\%}_{inter} + C^{60\%}_{inter}=C_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\%}_{inter} \approx$ `<c_80>` & $C^{60\%}_{inter} \approx$ `<c_60>` |
-| $C^{60\%}_{inter} \ge$ 0.6 $.C_{inter}$ | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span> | |
+| $C^{80\\\%}_{inter} \ge$ 0.8 $.C_{inter}$ ^ $C^{80\\\%}_{inter} + C^{60\\\%}_{inter}=C_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}_{inter} \approx$ `<c_80>` & $C^{60\\\%}_{inter} \approx$ `<c_60>` |
+| $C^{60\\\%}_{inter} \ge$ 0.6 $.C_{inter}$ | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span> | |
 | otherwise | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span> | |
 
 > [!IMPORTANT]
@@ -243,8 +243,7 @@ The following command was used to obtain the metrics required:
 
 ```bash
 # Change accordingly for the code being assessed
-ncu --metrics "regex:ˆsm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv \
---log-file out.csv $EXEC $INPUT
+ncu --metrics "regex:ˆsm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv $EXEC $INPUT
 ```
 
 |       Metric                                         | # operations  |
@@ -305,7 +304,7 @@ The following relevant I/O metrics were extracted from the `darshan` logs:
 The I/O score, $C_{I/O}$, was computed as follows:
 
 $$
-C_{I/O}=1.0-\frac{t_{read} + t_{write}}{t_{total}}=\texttt{<io\_score>}
+C_{I/O}=1.0-\frac{t_{read} + t_{write}}{t_{total}}=\texttt{<io\\\_score>}
 $$
 
 | I/O proportion | Description | Score |

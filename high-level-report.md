@@ -5,15 +5,17 @@ Contributors: Emily Wilkinson, Ananya Gangopadhyay
 Summary: High-level assessment report template
 ---
 
-# <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/> SHAREing: High-level performance assessment report template
+# <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/>SHAREing: High-level performance assessment report template
 >
 > [!NOTE]
 >
 > 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report. Add or remove subheadings per rubric if required for any given assessment.
 >
-> 2. The template is based on Chapter 5 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). While brief summaries for each rubric are provided in the template for the benefit of the reader, the assessor is expected to use the guidebook to perform the high-level assessment as indicated.
+> 2. Some equations have extra escape characters (`\`) to enable them to render correctly on GitHub. These might change the way the equations render for your Markdown previewer e.g. VS Code. Edit these if required when converting reports to PDF.
 >
-> 3. This template is not exhaustive, but should provide the framework for completing a high-level assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
+> 3. The template is based on Chapter 5 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). While brief summaries for each rubric are provided in the template for the benefit of the reader, the assessor is expected to use the guidebook to perform the high-level assessment as indicated.
+>
+> 4. This template is not exhaustive, but should provide the framework for completing a high-level assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
 
 As recommended in the [pre-assessment](pre-assessment-report.md), the high-level assessment was performed by `<assessor_name>` between the `<start_date>` and `<end_date>`.
 
@@ -31,7 +33,7 @@ We provide brief explanations of the high-level metrics in their relevant sectio
 
 ## Table of contents
 
-- [SHAREing: High-level performance assessment report template](#-shareing-high-level-performance-assessment-report-template)
+- [SHAREing: High-level performance assessment report template](#shareing-high-level-performance-assessment-report-template)
   - [Table of contents](#table-of-contents)
   - [1. Setup Details](#1-setup-details)
     - [1.1 Programming model](#11-programming-model)

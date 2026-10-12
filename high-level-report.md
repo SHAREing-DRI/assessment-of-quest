@@ -170,8 +170,8 @@ $$
 | Efficiency                                                 | Description | Score |
 | ---------------------------------------------------------- | ----------- | ----- |
 | $C^{80\\\%}_{intra} \ge$ 0.8                                 | <span style="background-color: #0080005f">Shared memory scaling does not require further analysis.</span> |   |
-| $C^{80\\\%}_{intra} \lt$ 0.8 ^ $C^{60\\\%}_{intra} \ge$ 0.6    | <span style="background-color: #ffff005c">Shared memory scaling may require analysis; scaling performance may be impacted when porting to newer chips with more cores.</span> |   |
-| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\\\%}_{intra} \approx$ `<c_80>` & $C^{60\\\%}_{intra} \approx$ `<c_60>`|
+| $C^{80\\\%}_{intra} \lt$ 0.8 ^ $C^{60\\\%}\_{intra} \ge$ 0.6    | <span style="background-color: #ffff005c">Shared memory scaling may require analysis; scaling performance may be impacted when porting to newer chips with more cores.</span> |   |
+| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\\\%}_{intra} \approx$ `<c_80>` & $C^{60\\\%}\_{intra} \approx$ `<c_60>`|
 
 > [!IMPORTANT]
 > Place the intra-node score in the correct range. Contextualise and elaborate on the classification of the score.
@@ -216,8 +216,8 @@ $$
 
 | Efficiency | Description | Score |
 | ---------- | ----------- | ----- |
-| $C^{80\\\%}_{inter} \ge$ 0.8 $.C_{inter}$ ^ $C^{80\\\%}_{inter} + C^{60\\\%}_{inter}=C_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}_{inter} \approx$ `<c_80>` & $C^{60\\\%}_{inter} \approx$ `<c_60>` |
-| $C^{60\\\%}_{inter} \ge$ 0.6 $.C_{inter}$ | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span> | |
+| $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} \approx$ `<c_80>` & $C^{60\\\%}\_{inter} \approx$ `<c_60>` |
+| $C^{60\\\%}\_{inter} \ge$ 0.6 $.C\_{inter}$ | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span> | |
 | otherwise | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span> | |
 
 > [!IMPORTANT]

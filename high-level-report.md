@@ -24,7 +24,7 @@ The submitter has specified that out of the five performance dimensions, the one
 - [ ] [Core-level assessment](#2-core-level-assessment)
 - [ ] [Intra-node assessment](#3-intra-node-assessment)
 - [ ] [Inter-node assessment](#4-inter-node-assessment)
-- [ ] [GPU/accelerator assessment](#5-gpu-assessment)
+- [ ] [GPU-performance assessment](#5-gpu-performance-assessment)
 - [ ] [I/O assessment](#6-io-assessment)
 
 We provide brief explanations of the high-level metrics in their relevant sections. However, for a more detailed description, please refer to Chapter 5 in the [performance assessment guidebook](https://shareing-dri.github.io/assets/pdfs/perf_analysis_workbook_brief.pdf).
@@ -160,9 +160,10 @@ The 80% threshold is at `<p_80>` cores and the 60% threshold is at `<p_60>` core
 $$
 C^{80\%}_{intra}=\frac{p^{80\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\_80>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_80}\%
 $$
-and
-$$
 
+and
+
+$$
 C^{60\%}_{intra}=\frac{p^{60\%}_{critical,intra}}{p_{max,intra}}=\frac{\texttt{<p\_60>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_60}\%
 $$
 
@@ -206,9 +207,10 @@ At `<N_example>` nodes, the parallel efficiency fell below 60% and so the proble
 $$
 C^{80\%}_{inter}=\frac{p^{80\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\_80>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_80}\%
 $$
-and
-$$
 
+and
+
+$$
 C^{60\%}_{inter}=\frac{p^{60\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\_60>}}{\texttt{<num\_cores\_per\_node>}}=\texttt{c\_60}\%
 $$
 

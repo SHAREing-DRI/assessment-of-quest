@@ -8,8 +8,9 @@ examples/*.log
 examples/*.pdf
 examples/*.tex
 
-## Build files and binaries
+## Build files, cache and binaries
 **/**.egg-info
+**/__pycache__*
 
 ## Sphinx doc outputs
 **/build

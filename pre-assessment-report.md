@@ -9,18 +9,13 @@ Summary: Pre-assessment report template document
 
 > [!NOTE]
 >
-> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders.
-     The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the
-     information boxes and replace the example text in your report.
+> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report.
 >
-> 2. The template is based on Chapter 4 of
-     the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However,
-     the guidebook should not be necessary to perform the pre-assessment using this template.
+> 2. The template is based on Chapter 4 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
 >
-> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the
-     information submitted via
-     the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u),
-     by the submitter.
+> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
+>
+> 4. While the headings and sections in the report indicate the structure you should follow, in some cases, some of the headings may not be applicable. You can change the headings accordingly if needed.
 
 > [!IMPORTANT]
 > Is this a test submission, internal review or external review? If it is part of a larger project or funding, add that information here. You may also include your (the assessor's) name, optionally with contact details.
@@ -79,8 +74,7 @@ git clone -p <branch_name> <repository> && make release
 ### 2.2 Fetch and run benchmark
 
 > [!IMPORTANT]
-> Provide commands to fetch the benchmark. If it is directly provided by the submitter, note that here and provide as an
-attachment if permitted.
+> Provide commands to fetch and run the benchmark. If it is directly provided by the submitter, note that here and upload it to the assessment repository if permitted. In the latter case, or if the benchmark is bundled with the code (i.e. no fetching is required), you may change to the heading to "2.2 Run benchmark".
 
 The benchmark can be obtained from:
 

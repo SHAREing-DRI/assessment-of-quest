@@ -39,7 +39,7 @@ assessment is performed by `<assessor_name>` of `<assessor_affiliation>` on `<as
   - [2. Benchmark setup](#2-benchmark-setup)
     - [2.1 Fetch and build program](#21-fetch-and-build-program)
     - [2.2 Fetch and run benchmark](#22-fetch-and-run-benchmark)
-    - [Reference architecture](#reference-architecture)
+    - [2.3 Reference architecture](#23-reference-architecture)
   - [3. Description of working environment](#3-description-of-working-environment)
     - [3.1 Hardware information](#31-hardware-information)
     - [3.2 Libraries and modules](#32-libraries-and-modules)
@@ -98,7 +98,7 @@ The following output is expected every `<n>` iterations:
 <example-output>
 ```
 
-### Reference architecture
+### 2.3 Reference architecture
 
 > [!IMPORTANT]
 > Add details of the reference architecture as provided by the submitter. Add any relevant details you may find

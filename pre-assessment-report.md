@@ -2,31 +2,23 @@
 License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
 Creator: Andrew Naden
 Contributors: Andrew Naden; Ananya Gangopadhyay
-Summary: Pre-assessment reports template document
+Summary: Pre-assessment report template document
 ---
 
-# Pre-assessment template
+# <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/> SHAREing: Pre-assessment report template
 
 > [!NOTE]
 >
-> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders.
-     The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the
-     information boxes and replace the example text in your report.
+> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report.
 >
-> 2. The template is based on Chapter 4 of
-     the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However,
-     the guidebook should not be necessary to perform the pre-assessment using this template.
+> 2. The template is based on Chapter 4 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
 >
-> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the
-     information submitted via
-     the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u),
-     by the submitter.
-
-## Assessment objective
+> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
+>
+> 4. While the headings and sections in the report indicate the structure you should follow, in some cases, some of the headings may not be applicable. You can change the headings accordingly if needed.
 
 > [!IMPORTANT]
-> Is this a test submission, internal review or external review? If it is part of a larger project or funding, add that
-information here. You may also include your (the assessor's) name, optionally with contact details.
+> Is this a test submission, internal review or external review? If it is part of a larger project or funding, add that information here. You may also include your (the assessor's) name, optionally with contact details.
 
 A test submission of `<repository/website>`, version `<version_number>` using the `<benchmark_name>` benchmark. This
 assessment is performed by `<assessor_name>` of `<assessor_affiliation>` on `<assessment_date>`.
@@ -41,23 +33,29 @@ assessment is performed by `<assessor_name>` of `<assessor_affiliation>` on `<as
 
 ## Table of contents
 
-> [!TIP]
-> Place `x` inside the box when complete to mark the checkbox.
+- [SHAREing: Pre-assessment report template](#-shareing-pre-assessment-report-template)
+  - [Disclaimers](#disclaimers)
+  - [Table of contents](#table-of-contents)
+  - [2. Benchmark setup](#2-benchmark-setup)
+    - [2.1 Fetch and build program](#21-fetch-and-build-program)
+    - [2.2 Fetch and run benchmark](#22-fetch-and-run-benchmark)
+    - [2.3 Reference architecture](#23-reference-architecture)
+  - [3. Description of working environment](#3-description-of-working-environment)
+    - [3.1 Hardware information](#31-hardware-information)
+    - [3.2 Libraries and modules](#32-libraries-and-modules)
+    - [3.3 Assessment tools](#33-assessment-tools)
+  - [4. Compiler setup and optimisations](#4-compiler-setup-and-optimisations)
+  - [5. Computational complexity and scaling](#5-computational-complexity-and-scaling)
+  - [6. Memory, storage and I/O](#6-memory-storage-and-io)
+  - [7. Additional comments from submitter](#7-additional-comments-from-submitter)
+  - [8. Pre-assessment outcome](#8-pre-assessment-outcome)
 
-- [ ] [1: Benchmark setup](#1-benchmark-setup)
-- [ ] [2: Description of working environment](#2-description-of-working-environment)
-- [ ] [3: Compiler setup and optimisations](#3-compiler-setup-and-optimisations)
-- [ ] [4: Computational complexity and scaling](#4-computational-complexity-and-scaling)
-- [ ] [5: Memory, storage and I/O](#5-memory-storage-and-io)
-- [ ] [6: Additional comments from submitter](#6-additional-comments-from-submitter)
-- [ ] [7: Pre-assessment outcome](#7-pre-assessment-outcome)
-
-## 1: Benchmark setup
+## 2. Benchmark setup
 
 > [!IMPORTANT]
 > This section should be composed of information provided by the submitter.
 
-### Fetch and build program
+### 2.1 Fetch and build program
 
 > [!IMPORTANT]
 > Provide commands to fetch and build the program. Include version numbers where possible.
@@ -73,11 +71,10 @@ spack install <program_name>@<version_number>
 git clone -p <branch_name> <repository> && make release
 ```
 
-### Fetch and run benchmark
+### 2.2 Fetch and run benchmark
 
 > [!IMPORTANT]
-> Provide commands to fetch the benchmark. If it is directly provided by the submitter, note that here and provide as an
-attachment if permitted.
+> Provide commands to fetch and run the benchmark. If it is directly provided by the submitter, note that here and upload it to the assessment repository if permitted. In the latter case, or if the benchmark is bundled with the code (i.e. no fetching is required), you may change to the heading to "2.2 Run benchmark".
 
 The benchmark can be obtained from:
 
@@ -101,16 +98,16 @@ The following output is expected every `<n>` iterations:
 <example-output>
 ```
 
-### Reference architecture
+### 2.3 Reference architecture
 
 > [!IMPORTANT]
 > Add details of the reference architecture as provided by the submitter. Add any relevant details you may find
 regarding the architecture/system online. If the same system is accessible to you for the assessment, then indicate that
-here and detail the information in the [next section](#hardware-information).
+here and detail the information in the [next section](#31-hardware-information).
 
-## 2: Description of working environment
+## 3. Description of working environment
 
-### Hardware information
+### 3.1 Hardware information
 
 > [!IMPORTANT]
 > Add the hardware information used, including where applicable the queue information if necessary. Comment on expected
@@ -146,13 +143,13 @@ nodes. A placeholder for hardware accelerators is provided. For most assessment 
 > Add details that you can obtain from the system or online information about sockets, NUMA regions, interconnects and
 cache sizes.
 
-### Libraries and modules
+### 3.2 Libraries and modules
 
 > [!IMPORTANT]
 > Provide information on the libraries that need to be installed or modules that must be loaded based on the compilation
 information provided by the submitter.
 
-### Assessment tools
+### 3.3 Assessment tools
 
 > [!IMPORTANT]
 >
@@ -175,7 +172,7 @@ information provided by the submitter.
     - `<tool_1>`
     - `<tool_2>`
 
-## 3: Compiler setup and optimisations
+## 4. Compiler setup and optimisations
 
 > [!IMPORTANT]
 > Based on the compilation information provided by submitter, comment on the following (where applicable):
@@ -197,7 +194,7 @@ Build instructions from the user `<build_toolchain>` to build the `<program_name
 > MAQAO should present missed compiler optimisation opportunities. Increasing the optimisation level may require
 re-converging the system to confirm accuracy. This may be outside the scope of the assessment.
 
-## 4: Computational complexity and scaling
+## 5. Computational complexity and scaling
 
 > [!IMPORTANT]
 > Comment on the possibility of scaling the problem up and down, both in strong (changing number of work units e.g.
@@ -210,7 +207,7 @@ access it.
 
 The `<parameter>` value can be varied to increase the problem size for scaling tests.
 
-## 5: Memory, storage and I/O
+## 6. Memory, storage and I/O
 
 > [!IMPORTANT]
 > Comment on the expected in memory size of the program at runtime, including data. An estimate of this information
@@ -233,15 +230,14 @@ This output should be minimal when testing the working performance of the progra
 Excessive I/O will result in an inaccurate performance assessment and may result in rejection.
 
 The benchmark writes to the console output every `<n>`
-iterations [as indicated by the submitter](#fetch-and-run-benchmark).
+iterations [as indicated by the submitter](#22-fetch-and-run-benchmark).
 
-## 6: Additional comments from submitter
+## 7. Additional comments from submitter
 
 > [!IMPORTANT]
 > Include any additional information from the submitter that does not fit the previous sections.
 
-## 7: Pre-assessment outcome
+## 8. Pre-assessment outcome
 
 > [!IMPORTANT]
-> Indicate whether the assessment will proceed to the high-level stage. If the assessment is rejected here, comment on
-why and how to proceed.
+> Indicate whether the assessment will proceed to the high-level stage. If the assessment is rejected here, comment on why and how to proceed.

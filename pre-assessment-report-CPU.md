@@ -207,35 +207,25 @@ running on two MPI ranks with 4 threads each.
 
 ### 3.1 Hardware information
 
-> [!IMPORTANT]
-> Add the hardware information used, including where applicable the queue information if necessary. Comment on expected
-normal limit for the hardware, e.g. size of the largest interconnected set of nodes, or memory limitations. Compare with
-the reference architecture (if different), indicating any issues you may expect to see due to the differences.
+The DINE2 system based at Durham University was used for this assessment, which is a component of the HPC Hardware Lab @ Durham. However, the individual `gi001` node was used for compilation as this is also an Intel SapphireRapids chip allowing for compilation on the same architecture as DINE.
 
-The `<cluster_name>` system based at `<university/organisation>` was used for this assessment.
-
-> [!IMPORTANT]
-> Provide processor, memory and cache information as well as interconnect information (e.g. Infiniband, NVlink - if
-across multiple nodes) of the system the assessment is to be performed on.
-
-The hardware details for `<cluster_name>` are `[available at](<URL>)`. This information is corroborated by running
-`cat /proc/cpuinfo` on one of the compute nodes via an interactive session. There are `<num_nodes>` compute nodes on the
+The hardware details for DINE2 are [available at](https://cosma.readthedocs.io/en/latest/dine2.html). This information is corroborated by running
+`cat /proc/cpuinfo` on one of the compute nodes via an interactive session. There are 8 compute nodes on the
 system:
 
-> [!IMPORTANT]
-> The table below is an example and should be adapted for "non-standard" architectures, e.g. systems with Grace Hopper
-nodes. A placeholder for hardware accelerators is provided. For most assessment projects, these are likely to be GPUs
-(generally Nvidia or AMD). But some cases may also work with FPGAs, ASICs etc. Include any relevant specifications.
-
-| Specification             | Per node                                                                     |
-|---------------------------|------------------------------------------------------------------------------|
-| Processors                | `<num_procs>` $\times$ `[<processor_name>](<link-to-online-details>)`        |
-| `<Hardware accelerators>` | `<num_gpus/fpgas>` $\times$ `[<accelerator_name>](<link-to-online-details>)` |
-| Clock speed per CPU       | `<freq>`MHz                                                                  |
-| Sockets                   | `<num_sockets>`                                                              |
-| Cores                     | `<num_cores>`                                                                |
-| RAM                       | `<memory_size>`GB `<memory_type>`                                            |
-| Local storage             | `<storage_size>`GB `<storage_type>`                                          |
+| Specification             | Per node                                                                                  |
+|---------------------------|-------------------------------------------------------------------------------------------|
+| Processors                | 2 $\times$ Intel(R) Xeon(R) Gold 6430 (Intel Sapphire Rapids)                             |
+| GPUs                      | 8 $\times$ Nvidia A30 24GB (unused here)                                                  |
+| Clock speed / CPU         | min 800MHz, max 3400MHz                                                                   |
+| Sockets                   | 2                                                                                         |
+| Cores / socket            | 32                                                                                        |
+| NUMA domains / socket     | 1                                                                                         |
+| Multithreading            | Enabled, 2 threads per core                                                               |
+| L1/L2 Cache size / core   | 48 KB L1, 2 MB L2                                                                         |
+| L3 Cache size / 32 cores  | 60 MB                                                                                     |
+| RAM                       | 2TB                                                                                       |
+| Interconnect              | Infiniband (CerIO composability fabric, allowing GPUs to be added to servers upon demand) |
 
 ### 3.2 Libraries and modules
 
@@ -266,7 +256,7 @@ Previous studies on scaling and performance are given in a GitHub issue linked [
 
 ## 6. Memory, storage and I/O
 
-According to the submitter, the expected memory required for the benchmark is `<memory_size>`GB.
+A test run of 29 qubits used approximately 8.4GB of RAM, and as described above we can expect the memory footprint to approximately double for every additional qubit. The submitter explained we should be able to fit a 32 qubit within a 256GB RAM machine, which appears to be consist with our observations.
 
 No I/O is considered here unless, as the submitter notes, check pointing and restart features are explored. Initially we leave this is as out-of-scope.
 

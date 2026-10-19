@@ -129,11 +129,12 @@ interactively by running:
     $ ./high-level-plots.py intranode --graph
 
 
-and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report:
+and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report. 
+To generate it along with the graph, the following command can be used:
 
 .. code-block:: bash
 
-    $ cat times.csv | ./high-level-plots.py intranode -gmd --markdown-file=stdout
+    $ cat times.csv | ./high-level-plots.py -d intranode -g cont -m --markdown-file=stdout # or internode
 
 .. code-block:: md
 

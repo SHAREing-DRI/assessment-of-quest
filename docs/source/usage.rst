@@ -121,18 +121,18 @@ input is a table which can be in CSV or Markdown format. Suppose we have the fol
     32, 8.5401
     64, 7.4589
 
-where the first column is the core count and the second is the time in seconds. The graph can be generated
+where the first column is the core count and the second is the time in seconds. The graph can be checked
 interactively by running:
 
 .. code-block:: bash
 
     ./high-level-plots.py intranode --graph # or -g
 
+and pasting the data when prompted. This will generate a plot in a separate window without saving it.
+The default is a continuous line plot. For a categorical point plot use ``--graph cont``.
 
-and pasting the data when prompted. The default is a continuous line plot. For a categorical point plot use
-``--graph cont``.
-
-The script can also generate a Markdown table which can be copied to the report. To generate it along with the graph, the following command can be used:
+The script can also generate a Markdown table which can be copied to the report. To
+generate it along with saving the graph to file, the following commands can be used:
 
 .. code-block:: bash
 

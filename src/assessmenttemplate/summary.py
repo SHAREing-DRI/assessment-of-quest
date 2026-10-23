@@ -184,5 +184,5 @@ def summary_main(unprocessed_args):
         fig.savefig(args.output)
     if args.stdout_graph:
         fig.savefig(sys.stdout)
-    if args.show:
+    if args.show or not args.output or not args.stdout_graph:
         plt.show()

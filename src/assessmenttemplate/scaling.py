@@ -155,10 +155,11 @@ def scaling_add_args(main_parser, scaling_rubric="intranode"):
                                            "the standard console output."
                                     )
 
-    parser.add_argument("-g", "--graph", default=None, choices=["cont", "cat"], help="Generate graph; either a "
-                                                                                     "continuous line plot (cont; "
-                                                                                     "default) or a categorical point "
-                                                                                     "plot (cat).")
+    parser.add_argument("-g", "--graph", nargs="?", default=None, const="cont", choices=["cont", "cat"],
+                        help="Generate graph; either a "
+                             "continuous line plot (cont; "
+                             "default) or a categorical point "
+                             "plot (cat).")
     parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table.")
     parser.add_argument("-c", "--critical-points", action="store_true",
                         help="Calculate 80 and 60 percent critical values.")

@@ -91,13 +91,13 @@ Intra-node and inter-node performance analysis figures are generated using the `
 `intranode` mode is provided below and `internode` uses the same arguments:
 
 ```txt
-usage: high-level-plots.py intranode [-h] [-g {cont,cat}] [-m] [-c] [-a] [--graph-file GRAPH_FILE] [--markdown-file MARKDOWN_FILE] [--critical-points-file CRITICAL_POINTS_FILE]
+usage: high-level-plots.py intranode [-h] [-g [{cont,cat}]] [-m] [-c] [-a] [--graph-file GRAPH_FILE] [--markdown-file MARKDOWN_FILE] [--critical-points-file CRITICAL_POINTS_FILE]
 
 Generate a strong scaling efficiency graph and table from intra-node runtimes.
 
 options:
   -h, --help            show this help message and exit
-  -g, --graph {cont,cat}
+  -g, --graph [{cont,cat}]
                         Generate graph; either a continuous line plot (cont; default) or a categorical point plot (cat).
   -m, --markdown        Generate markdown table.
   -c, --critical-points
@@ -114,7 +114,8 @@ Unless an output flag is specified, a requested output will be echoed to the sta
 ```
 
 In the `intranode` or `internode` modes, the script can take data input from the standard input, a unix pipe or a file.
-The input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as `times.csv`:
+The input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as
+`intranode_times.csv`:
 
 ```csv
 Cores, Times
@@ -127,18 +128,22 @@ Cores, Times
 64, 7.4589
 ```
 
-where the first column is the core count and the second is the time in seconds. The graph can be generated interactively
-by running:
+where the first column is the core count and the second is the time in seconds. The graph can be generated
+interactively by running:
 
 ```shell
-./high-level-plots.py intranode --graph # or internode
+./high-level-plots.py intranode --graph # or -g
 ```
 
-and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report. To
-generate it along with the graph, the following command can be used:
+and pasting the data when prompted. The default is a continuous line plot. For a categorical point plot use
+`--graph cont`.
+
+The script can also generate a Markdown table which can be copied to the report. To
+generate it along with the graph, the following commands can be used:
 
 ```shell
-cat times.csv | ./high-level-plots.py -d intranode -g cont -m --markdown-file=stdout # or internode
+cat intranode_times.csv | ./high-level-plots.py -d intranode -mg --markdown-file=stdout
+# N.B. `-gm` will not work as the `m` will be interpreted as an input to `-g`
 ```
 
 ```md
@@ -153,7 +158,8 @@ cat times.csv | ./high-level-plots.py -d intranode -g cont -m --markdown-file=st
 | 64                | 7.4589     | 0.063                     |
 ```
 
-The script can also be provided a Markdown table in the above format as the input just like the CSV table.
+The script can also be provided a Markdown table in the above format as the input just like the CSV table. For
+`intranode`, only the first two columns containing number of cores and execution time respectively will be read in.
 
 By default (set with the `--default` or `-d` flag), the generated graph will be written to the [`images`](images)
 directory.

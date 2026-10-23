@@ -152,6 +152,8 @@ The script can also generate a Markdown table which can be copied to the report.
 
 The script can also be provided a Markdown table in the above format as the input just like the CSV table. For
 ``intranode``, only the first two columns containing number of cores and execution time respectively will be read in.
+For `internode`, the first column is expected to be the node count, and a third `"Relative problem size" <../../high-level-report.md#4-inter-node-assessment>`_
+column is also expected.
 
 By default (set with the ``--default`` or ``-d`` flag), the generated graph will be written to the ``images`` directory.
 

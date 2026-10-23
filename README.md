@@ -42,10 +42,11 @@ create the plots and metric required to fill out the [high-level assessment repo
 ## The `assessmenttemplate` package
 
 The `assessmenttemplate` Python package and its few dependencies can be installed locally, or in a virtual environment
-(recommended), by running the command in the repository's root directory:
+(recommended) optionally with [uv](https://docs.astral.sh/uv/pip/packages/#installing-a-package), by running the command
+in the repository's root directory:
 
 ```shell
-pip install .
+pip install . # or uv pip install .
 ```
 
 The package currently only contains modules to generate figures and metrics for that section of the high-level
@@ -133,7 +134,8 @@ by running:
 ./high-level-plots.py intranode --graph # or internode
 ```
 
-and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report. To generate it along with the graph, the following command can be used:
+and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report. To
+generate it along with the graph, the following command can be used:
 
 ```shell
 cat times.csv | ./high-level-plots.py -d intranode -g cont -m --markdown-file=stdout # or internode

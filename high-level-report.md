@@ -172,13 +172,13 @@ doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is th
 number of nodes on the DINE2 cluster. There is hence one jump
 
 $$
-C_{\text{inter}}^{\text{80\%}} = | \{p \in \mathbb{C}_{\text{critical}}^{\text{60\%}}: \quad E(p, n) \geq 80\%\} | = 1.0
+C_{inter}^{80\\\%} = | \{p \in \mathbb{C}_{crit}^{60\\\%}: \quad E(p, n) \geq 80\\\%\} | = 1.0
 $$
 
 and
 
 $$
-C_{\text{inter}}^{\text{60\%}} = | \{p \in \mathbb{C}_{\text{critical}}^{\text{60\%}}: \quad 80\% \geq E(p, n) \geq 60\%\}| = 0.0
+C_{inter}^{60\\\%} = | \{p \in \mathbb{C}_{crit}^{60\\\%}: \quad 80\\\% \geq E(p, n) \geq 60\\\%\}| = 0.0
 $$
 
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |
@@ -195,30 +195,25 @@ Overall, the inter-node scaling looks very good.
 
 ## 5. GPU-performance assessment
 
-> [!IMPORTANT]
-> Include a brief description of the GPU rubric. Provide details on the configurations and metrics collected from it.
-This rubric needs to be further generalised for other vendors such as AMD and accelerators such as FPGAs.
-
 For a high-level analysis of a single GPU's performance, we look for the floating-point operation rate compared to the
 theoretical rate, $R^{GPU}_{theoretical}$ for the GPU, which can be obtained
 from [its specifications](https://www.nvidia.com/en-sg/data-center/h100/).
 
-> [!TIP]
-> The example uses NVIDIA H100s. Check the specifications for the GPU you are using for the assessment.
-
 To analyse the performance of a single GPU, the code was compiled with the latest version of CUDA and NVHPC available on
-`<cluster_name>`. For this metric, the code was run on a single GPU and assigned
-the [input indicated earlier](#13-base-input) with the following modifications:
+`gn004`. For this metric, the code was run on a single GPU and assigned
+the [input indicated earlier](#13-base-input), though the runtime on GPU is much shorter so we use the largest problem we have available within our memory constraints
 
 ```txt
-<example_gpu_input>
+./qft 31
 ```
+
+In future iterations we will also include an analysis of the HIP code on an AMD GPU.
 
 The following command was used to obtain the metrics required:
 
 ```bash
 # Change accordingly for the code being assessed
-ncu --metrics "regex:ˆsm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv $EXEC $INPUT
+ncu --metrics "regex:sm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv ./qft 31
 ```
 
 | Metric                                              | # operations |

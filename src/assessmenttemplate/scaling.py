@@ -155,22 +155,23 @@ def scaling_add_args(main_parser, scaling_rubric="intranode"):
                                            "the standard console output."
                                     )
 
-    parser.add_argument("-g", "--graph", default=None, choices=["cont", "cat"], help="Generate graph; either a "
-                                                                                     "continuous line plot (cont; "
-                                                                                     "default) or a categorical point "
-                                                                                     "plot (cat).")
+    parser.add_argument("-g", "--graph", nargs="?", default=None, const="cont", choices=["cont", "cat"],
+                        help="Generate graph; either a "
+                             "continuous line plot (cont; "
+                             "default) or a categorical point "
+                             "plot (cat).")
     parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table.")
     parser.add_argument("-c", "--critical-points", action="store_true",
                         help="Calculate 80 and 60 percent critical values.")
     parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types.")
     parser.add_argument("--graph-file", help="Specify an output file for the graph.",
-                        default=f'images/{scaling_rubric}.png')
+                        default=None)
     parser.add_argument("--markdown-file",
                         help="Specify an output file for the markdown table.",
-                        default=f'{scaling_rubric}_table.md')
+                        default=None)
     parser.add_argument("--critical-points-file",
                         help="Specify an output file for the calculated critical values.",
-                        default=f'{scaling_rubric}_critical_proportions.txt')
+                        default=None)
 
 
 def scaling_parse_args(unprocessed_args):
@@ -195,6 +196,8 @@ def scaling_parse_args(unprocessed_args):
         if args.verbose:
             print(f"Using default files.")
         args.graph_file = f"images/{args.mode}.svg" if args.svg else f"images/{args.mode}.png"
+        args.markdown_file = f'{args.mode}_table.md'
+        args.critical_points_file = f'{args.mode}_critical_proportions.txt'
 
     if args.svg and (args.default or args.graph_file or (args.graph and args.output)):
         print(
@@ -284,10 +287,10 @@ def scaling_main(unprocessed_args):
                 os.makedirs(os.path.dirname(args.graph_file), exist_ok=True)
             # Save figure to file
             fig.savefig(args.graph_file)
-        if args.show:
-            plt.show()
         if args.stdout_graph:
             fig.savefig(sys.stdout)
+        if args.show or not args.graph_file or not args.stdout_graph:
+            plt.show()
 
     if args.markdown:
         if args.verbose:

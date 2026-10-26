@@ -35,12 +35,11 @@ The ``assessmenttemplate`` package
 ***********************************
 
 The ``assessmenttemplate`` Python package and its few dependencies can be installed locally, or in a virtual
-environment,
-by running the command:
+environment (recommended) optionally with `uv <https://docs.astral.sh/uv/pip/packages/#installing-a-package>`_, by running the command:
 
 .. code-block:: bash
 
-    pip install .
+    pip install . # or uv pip install .
 
 The package currently only contains modules to generate figures and metrics for that section of the high-level
 assessment with the ``high-level-plots.py`` script :
@@ -87,13 +86,13 @@ Intra-node and inter-node performance analysis figures are generated using the `
 
 .. code-block::
 
-    usage: high-level-plots.py intranode [-h] [-g {cont,cat}] [-m] [-c] [-a] [--graph-file GRAPH_FILE] [--markdown-file MARKDOWN_FILE] [--critical-points-file CRITICAL_POINTS_FILE]
+    usage: high-level-plots.py intranode [-h] [-g [{cont,cat}]] [-m] [-c] [-a] [--graph-file GRAPH_FILE] [--markdown-file MARKDOWN_FILE] [--critical-points-file CRITICAL_POINTS_FILE]
 
     Generate a strong scaling efficiency graph and table from intra-node runtimes.
 
     options:
       -h, --help            show this help message and exit
-      -g, --graph {cont,cat}
+      -g, --graph [{cont,cat}]
                             Generate graph; either a continuous line plot (cont; default) or a categorical point plot (cat).
       -m, --markdown        Generate markdown table.
       -c, --critical-points
@@ -109,10 +108,11 @@ Intra-node and inter-node performance analysis figures are generated using the `
     Unless an output flag is specified, a requested output will be echoed to the standard console output.
 
 In the ``intranode`` mode, the script can take data input from the standard input, a unix pipe or a file. The
-input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as ``times.csv``:
+input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as ``intranode_times.csv``:
 
 .. code-block::
-
+    
+    Cores, Times
     1, 29.995
     2, 18.23
     4, 10.74
@@ -121,33 +121,39 @@ input is a table which can be in CSV or Markdown format. Suppose we have the fol
     32, 8.5401
     64, 7.4589
 
-where the first column is the core count and the second is the time in seconds. The graph can be generated
+where the first column is the core count and the second is the time in seconds. The graph can be checked
 interactively by running:
 
 .. code-block:: bash
 
-    $ ./high-level-plots.py intranode --graph
+    ./high-level-plots.py intranode --graph # or -g
 
+and pasting the data when prompted. This will generate a plot in a separate window without saving it.
+The default is a continuous line plot. For a categorical point plot use ``--graph cont``.
 
-and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report:
+The script can also generate a Markdown table which can be copied to the report. To
+generate it along with saving the graph to file, the following commands can be used:
 
 .. code-block:: bash
 
-    $ cat times.csv | ./high-level-plots.py intranode -gmd --markdown-file=stdout
-
+    cat intranode_times.csv | ./high-level-plots.py -d intranode -mg --markdown-file=stdout
+    # N.B. `-gm` will not work as the `m` will be interpreted as an input to `-g`
 .. code-block:: md
 
-    | Thread count | Time (s) | Parallel Efficiency |
-    |--------------|----------|---------------------|
-    | 1            | 29.995   | 1.000               |
-    | 2            | 18.230   | 0.823               |
-    | 4            | 10.740   | 0.698               |
-    | 8            | 10.330   | 0.363               |
-    | 16           | 9.1307   | 0.205               |
-    | 32           | 8.5401   | 0.110               |
-    | 64           | 7.4589   | 0.063               |
+    |   # Cores/threads |   Time (s) |   Parallel efficiency (%) |
+    |------------------:|-----------:|--------------------------:|
+    | 1                 | 29.995     | 1.000                     |
+    | 2                 | 18.230     | 0.823                     |
+    | 4                 | 10.740     | 0.698                     |
+    | 8                 | 10.330     | 0.363                     |
+    | 16                | 9.1307     | 0.205                     |
+    | 32                | 8.5401     | 0.110                     |
+    | 64                | 7.4589     | 0.063                     |
 
-The script can also be provided a Markdown table in the above format as the input just like the CSV table.
+The script can also be provided a Markdown table in the above format as the input just like the CSV table. For
+``intranode``, only the first two columns containing number of cores and execution time respectively will be read in.
+For `internode`, the first column is expected to be the node count, and a third `"Relative problem size" <../../high-level-report.md#4-inter-node-assessment>`_
+column is also expected.
 
 By default (set with the ``--default`` or ``-d`` flag), the generated graph will be written to the ``images`` directory.
 

@@ -172,13 +172,13 @@ doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is th
 number of nodes on the DINE2 cluster. There is hence one jump
 
 $$
-C_{inter}^{80\\\%} = | \{p \in \mathbb{C}_{crit}^{60\\\%}: \quad E(p, n) \geq 80\\\%\} | = 1.0
+C_{inter}^{80\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad E(p, n) \geq 80\\\%\\\} | = 1.0
 $$
 
 and
 
 $$
-C_{inter}^{60\\\%} = | \{p \in \mathbb{C}_{crit}^{60\\\%}: \quad 80\\\% \geq E(p, n) \geq 60\\\%\}| = 0.0
+C_{inter}^{60\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad 80\\\% \geq E(p, n) \geq 60\\\%\\\}| = 0.0
 $$
 
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |

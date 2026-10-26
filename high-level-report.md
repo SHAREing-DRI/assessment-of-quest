@@ -189,7 +189,7 @@ where $\mathbb{C}_{crit}^{60\\\%}$ is the set of processes counts that correspon
 | $C^{60\\\%}\_{inter} \ge$ 0.6 $.C\_{inter}$                                                         | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span>      |                                                                                 |
 | otherwise                                                                                           | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span>        |                                                                                 |
 
-where we define $.C\_{inter} = |\mathbb{C}_{crit}^{60\\\%}$.
+where we define $C\_{inter} = |\mathbb{C}_{crit}^{60\\\%}|$.
 
 We note, however, a change in the output for the 8 node run at relative problem
 size. We suspect this is that there is some change in the runtime potentially

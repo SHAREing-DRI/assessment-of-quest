@@ -151,61 +151,47 @@ Based on the classification of the metrics and observations from the parallel ef
 
 ## 4. Inter-node assessment
 
-> [!IMPORTANT]
-> Include a brief description of the inter-node rubric. Provide more details on the programming model used for this code
-and assessment. Describe the initial problem size, and how it is scaled when the efficiency drops below 60%.
-
 The inter-node performance is measured using a combination of strong and weak scaling analyses. For a given problem
 size, a strong scaling analysis is performed over increasing node counts, with the parallel efficiency computed with
 respect to the performance on a single node. When the efficiency drops below 60%, the problem size is increased relative
 to the initial size. The run is repeated with the new size for that node count, and the strong scaling analysis is
 continued over the remaining node counts. The step is repeated every time the efficiency falls below 60%.
 
-> [!IMPORTANT]
-> Change the table headers and content according to the programming model used e.g. MPI only, OpenMP only, GPU + MPI
-etc. The "Relative problem size" entry is relative to the initial size used for 1 node i.e. the first entry will be 1,
-and if the problem size is doubled when the parallel efficiency drops below 60%, it will be 2, then 4 if doubled again
-later etc.
-
 | Nodes | Ranks | Threads per rank | Relative problem size | Time (s) | Parallel efficiency (%) |
 |-------|-------|------------------|-----------------------|----------|-------------------------|
-| 1     | 8     | 16               |                       |          |                         |
-| 2     | 16    | 16               |                       |          |                         |
-| 3     | 24    | 16               |                       |          |                         |
-| 4     | 32    | 16               |                       |          |                         |
-| 5     | 40    | 16               |                       |          |                         |
-| 6     | 48    | 16               |                       |          |                         |
-| 7     | 56    | 16               |                       |          |                         |
-| 8     | 64    | 16               |                       |          |                         |
+| 1     | 2     | 32               | 1.0                   | 134.592  | 1                       |
+| 2     | 4     | 32               | 1.0                   | 67.9727  | 0.990045                |
+| 4     | 8     | 32               | 1.0                   | 34.5952  | 0.97262                 |
+| 8     | 16    | 32               | 1.0                   | 267.626  | 0.0628638               |
+| 8     | 16    | 32               | 2.0                   | 36.8884  | 0.912157                |
 
 <img src='images/internode.png' width=500 alt="Internode performance"/>
 
-> [!IMPORTANT]
-> Highlight any observations made from the inter-node runtimes and graph. Compute the scores using the metrics generated
-with the `assessmenttemplate` package and the `high-level-plots.py` script and plug the values in the equation below.
-
-At `<N_example>` nodes, the parallel efficiency fell below 60% and so the problem size was doubled. The 80% threshold is
-at `<p_80>` cores and the 60% threshold is at `<p_60>` cores. As a proportion of the number of cores available on the
-node i.e. `<num_cores_per_node>`, the scores are:
+At 8 nodes, the parallel efficiency fell below 60% and so the problem size was
+doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is the maximum
+number of nodes on the DINE2 cluster. There is hence one jump
 
 $$
-C^{80\\\%}_{inter}=\frac{p^{80\\\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\\\_80>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_80}\\\%
+C_{\text{inter}}^{\text{80\%}} = | \{p \in \mathbb{C}_{\text{critical}}^{\text{60\%}}: \quad E(p, n) \geq 80\%\} | = 1.0
 $$
 
 and
 
 $$
-C^{60\\\%}_{inter}=\frac{p^{60\\\%}_{critical,inter}}{p_{max,inter}}=\frac{\texttt{<p\\\_60>}}{\texttt{<num\\\_cores\\\_per\\\_node>}}=\texttt{c\\\_60}\\\%
+C_{\text{inter}}^{\text{60\%}} = | \{p \in \mathbb{C}_{\text{critical}}^{\text{60\%}}: \quad 80\% \geq E(p, n) \geq 60\%\}| = 0.0
 $$
 
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |
 |-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} \approx$ `<c_80>` & $C^{60\\\%}\_{inter} \approx$ `<c_60>` |
+| $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} \approx$ 1.0 & $C^{60\\\%}\_{inter} \approx$ 0.0           |
 | $C^{60\\\%}\_{inter} \ge$ 0.6 $.C\_{inter}$                                                         | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span>      |                                                                                 |
 | otherwise                                                                                           | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span>        |                                                                                 |
 
-> [!IMPORTANT]
-> Place the inter-node score in the correct range. Contextualise and elaborate on the classification of the score.
+We note, however, a change in the output for the 8 node run at relative problem
+size. We suspect this is that there is some change in the runtime potentially
+as the data for each node becomes too diffuse, though we cannot verify this.
+Although, this is may be the cause for the dramatic increase in runtime.
+Overall, the inter-node scaling looks very good.
 
 ## 5. GPU-performance assessment
 
@@ -286,9 +272,9 @@ them.
 
 | Result                                       | Score          | Metric result |
 |----------------------------------------------|----------------|---------------|
-| [Core](#2-core-level-assessment)             | `<core_score>` | MFLOPS        |
-| [Intra-node (80%)](#3-intra-node-assessment) | `<c_80>`       | core(s)       |
-| [Inter-node (80%)](#4-inter-node-assessment) | `<c_80>`       | node(s)       |
+| [Core](#2-core-level-assessment)             | 0.32           | MFLOPS        |
+| [Intra-node (80%)](#3-intra-node-assessment) | 0.015625       | core(s)       |
+| [Inter-node (80%)](#4-inter-node-assessment) | 1.0            | node(s)       |
 | [GPU](#5-gpu-performance-assessment)         | `<gpu_score>`  | MFLOPS        |
 
 > [!IMPORTANT]

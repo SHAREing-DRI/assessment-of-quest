@@ -61,6 +61,8 @@ By default this will generate a `min_example` code which can be used to check
 the installation. Note that we have specified the compute capability of the
 H100 as per the data [here](https://developer.nvidia.com/cuda/gpus).
 
+**N.B.** To begin with we only consider to a single GPU run.
+
 ### 2.2 Fetch and run benchmark
 
 The `qft.cpp` benchmark is hosted on a GitHub issue, linked [here](https://github.com/QuEST-Kit/QuEST/pull/726), and listed below

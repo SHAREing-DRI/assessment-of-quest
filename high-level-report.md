@@ -169,7 +169,7 @@ continued over the remaining node counts. The step is repeated every time the ef
 
 At 8 nodes, the parallel efficiency fell below 60% and so the problem size was
 doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is the maximum
-number of nodes on the DINE2 cluster. There is hence one jump
+number of nodes on the DINE2 cluster. There is hence one jump giving
 
 $$
 C_{inter}^{80\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad E(p, n) \geq 80\\\%\\\} | = 1.0
@@ -181,11 +181,15 @@ $$
 C_{inter}^{60\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad 80\\\% \geq E(p, n) \geq 60\\\%\\\}| = 0.0
 $$
 
+where $\mathbb{C}_{crit}^{60\\\%}$ is the set of processes counts that correspond to a jump in problem size, and $E(p, n)$ is the parallel efficiency.
+
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |
 |-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 | $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} \approx$ 1.0 & $C^{60\\\%}\_{inter} \approx$ 0.0           |
 | $C^{60\\\%}\_{inter} \ge$ 0.6 $.C\_{inter}$                                                         | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span>      |                                                                                 |
 | otherwise                                                                                           | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span>        |                                                                                 |
+
+where we define $.C\_{inter} = |\mathbb{C}_{crit}^{60\\\%}$.
 
 We note, however, a change in the output for the 8 node run at relative problem
 size. We suspect this is that there is some change in the runtime potentially

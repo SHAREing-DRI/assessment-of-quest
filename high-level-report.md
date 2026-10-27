@@ -211,53 +211,7 @@ the [input indicated earlier](#13-base-input), though the runtime on GPU is much
 ./qft 31
 ```
 
-In future iterations we will also include an analysis of the HIP code on an AMD GPU.
-
-The following command was used to obtain the metrics required:
-
-```bash
-# Change accordingly for the code being assessed
-ncu --metrics "regex:sm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv ./qft 31
-```
-
-| Metric                                              | # operations |
-|-----------------------------------------------------|--------------|
-| `sm__sass_thread_inst_executed_op_dfma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_dmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_ffma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fadd_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hfma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hadd_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hmul_pred_on.sum` |              |
-
-The total runtime for the configuration without profiling was `<gpu_runtime>`.
-
->
-> [!IMPORTANT]
-> Total the number of operations for each category and use the runtime without profiling to get the observed floating
-> point rate. Add that to the table below along with the theoretical rate from the specifications of the GPU being used.
->
-The observed and theoretical floating point rates were:
-
-| Metric                   | MFLOPS                                             |
-|--------------------------|----------------------------------------------------|
-| $R^{GPU}_{theoretrical}$ |                                                    |
-| $R^{GPU}_{observed}$     | $\frac{\sum N_{opers}}{T_{exec}}=$`<gpu_observed>` |
-
-Based on these results, we determined that this software has a score
-of $C^{GPU} = \frac{R_{observed}}{R_{theoretical}}\approx$ `<gpu_score>`. As per the rubric, the metric is classified as
-follows:
-
-| Peak FLOPS proportion     | Description                                                                                                                                                             | Score                            |
-|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| $C_{GPU} \ge$ 0.8         | <span style="background-color: #0080005f">GPU performance does not require further analysis.</span>                                                                     |                                  |
-| 0.8 $\gt C_{GPU} \ge$ 0.6 | <span style="background-color: #ffff005c">GPU performance may require further analysis as it may not be effectively using the hardware to its maximum potential.</span> |                                  |
-| 0.6 $\gt C_{GPU}$         | <span style="background-color: #ff00004e">GPU performance requires in-depth analysis.</span>                                                                            | $C_{GPU} \approx$ `<gpu_metric>` |
-
-> [!IMPORTANT]
-> Place the GPU-performance score in the correct range. Contextualise and elaborate on the classification of the score.
+This analysis is pending whilst we review the GPU metric.
 
 ## 6. I/O Assessment
 
@@ -274,11 +228,6 @@ them.
 | [Core](#2-core-level-assessment)             | 0.32           | MFLOPS        |
 | [Intra-node (80%)](#3-intra-node-assessment) | 0.015625       | core(s)       |
 | [Inter-node (80%)](#4-inter-node-assessment) | 1.0            | node(s)       |
-| [GPU](#5-gpu-performance-assessment)         | `<gpu_score>`  | MFLOPS        |
-
-> [!IMPORTANT]
-> Use the score table above to generate the spiderweb plot for the summary using the `assessmenttemplate` package and
-the `high-level-plots.py` script.
 
 <img src='images/summary.png' width=500 alt="Summary"/>
 

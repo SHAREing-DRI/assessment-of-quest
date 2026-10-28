@@ -2,14 +2,14 @@
 License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
 Creator: Andrew Naden
 Contributors: Andrew Naden; Ananya Gangopadhyay
-Summary: Pre-assessment report template document
+Summary: Pre-assessment report of QuEST (CPU)
 ---
 
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/> SHAREing: Pre-assessment report template
 
 A external submission of [QuEST](https://quest.qtechtheory.org/) (Github [here](https://github.com/QuEST-Kit/QuEST/tree/main)), version `v.4.3.0` using the `qft` benchmark (specified in the GitHub issue [here](https://github.com/QuEST-Kit/QuEST/pull/726)) was made on the 20th of August 2026 to the SHAREing team at Durham.
 
-This assessment is performed by Thomas Flynn of Durham University between the 13th of October 2026 and the 21st of September 2026.
+This assessment is performed by Thomas Flynn of Durham University between the 13th of October 2026 and the 21st of October 2026.
 
 ## Disclaimers
 

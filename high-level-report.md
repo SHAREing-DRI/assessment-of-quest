@@ -2,7 +2,7 @@
 License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
 Creator: Emily Wilkinson
 Contributors: Emily Wilkinson, Ananya Gangopadhyay
-Summary: High-level assessment report template
+Summary: High-level assessment report of QuEST
 ---
 
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/>SHAREing: High-level performance assessment report template

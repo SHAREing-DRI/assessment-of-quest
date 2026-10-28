@@ -151,11 +151,14 @@ Based on the classification of the metrics and observations from the parallel ef
 
 ## 4. Inter-node assessment
 
-The inter-node performance is measured using a combination of strong and weak scaling analyses. For a given problem
-size, a strong scaling analysis is performed over increasing node counts, with the parallel efficiency computed with
-respect to the performance on a single node. When the efficiency drops below 60%, the problem size is increased relative
-to the initial size. The run is repeated with the new size for that node count, and the strong scaling analysis is
-continued over the remaining node counts. The step is repeated every time the efficiency falls below 60%.
+The inter-node performance is measured using a combination of strong and weak
+scaling analyses. For a given problem size, a strong scaling analysis is
+performed over increasing node counts, with the parallel efficiency computed
+with respect to the performance on a single node. When the efficiency drops
+below 60%, the problem size is increased relative to the initial size. The run
+is repeated with the new size for that node count, and the strong scaling
+analysis is continued over the remaining node counts. The step is repeated
+every time the efficiency falls below 60%.
 
 | Nodes | Ranks | Threads per rank | Relative problem size | Time (s) | Parallel efficiency (%) |
 |-------|-------|------------------|-----------------------|----------|-------------------------|
@@ -168,8 +171,9 @@ continued over the remaining node counts. The step is repeated every time the ef
 <img src='images/internode.png' width=500 alt="Internode performance"/>
 
 At 8 nodes, the parallel efficiency fell below 60% and so the problem size was
-doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is the maximum
-number of nodes on the DINE2 cluster. There is hence one jump giving
+doubled. The 80% are 60% threshold are both at 8 nodes (512 cores) as this is
+the maximum number of nodes on the DINE2 cluster. There is hence one jump
+giving
 
 $$
 C_{inter}^{80\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad E(p, n) \geq 80\\\%\\\} | = 1.0
@@ -181,7 +185,7 @@ $$
 C_{inter}^{60\\\%} = | \\\{p \in \mathbb{C}_{crit}^{60\\\%}: \quad 80\\\% \geq E(p, n) \geq 60\\\%\\\}| = 0.0
 $$
 
-where $\mathbb{C}_{crit}^{60\\\%}$ is the set of processes counts that correspond to a jump in problem size, and $E(p, n)$ is the parallel efficiency.
+where $\mathbb{C}_{crit}^{60\\\%}$ is the set of processor counts that correspond to a jump in problem size, and $E(p, n)$ is the parallel efficiency.
 
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |
 |-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|

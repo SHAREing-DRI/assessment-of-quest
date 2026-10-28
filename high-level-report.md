@@ -7,13 +7,13 @@ Summary: High-level assessment report template
 
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/>SHAREing: High-level performance assessment report template
 
-As recommended in the [pre-assessment](pre-assessment-report.md), the high-level assessment was performed by Thomas Flynn between the 15/10/26 and `<end_date>`.
+As recommended in the [pre-assessment](pre-assessment-report.md), the high-level assessment was performed by Thomas Flynn between the 15/10/26 and 28/10/26.
 
 The submitter has specified that out of the five performance dimensions, the ones relevant to this assessment and benchmark are:
 - [x] [Core-level assessment](#2-core-level-assessment)
 - [x] [Intra-node assessment](#3-intra-node-assessment)
-- [ ] [Inter-node assessment](#4-inter-node-assessment)
-- [ ] [GPU-performance assessment](#5-gpu-performance-assessment) (Pending pre-assessment)
+- [x] [Inter-node assessment](#4-inter-node-assessment)
+- [ ] [GPU-performance assessment](#5-gpu-performance-assessment) (Currently underway)
 
 We provide brief explanations of the high-level metrics in their relevant sections. However, for a more detailed
 description, please refer to Chapter 5 in
@@ -211,53 +211,7 @@ the [input indicated earlier](#13-base-input), though the runtime on GPU is much
 ./qft 31
 ```
 
-In future iterations we will also include an analysis of the HIP code on an AMD GPU.
-
-The following command was used to obtain the metrics required:
-
-```bash
-# Change accordingly for the code being assessed
-ncu --metrics "regex:sm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv ./qft 31
-```
-
-| Metric                                              | # operations |
-|-----------------------------------------------------|--------------|
-| `sm__sass_thread_inst_executed_op_dfma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_dmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_ffma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fadd_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_fmul_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hfma_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hadd_pred_on.sum` |              |
-| `sm__sass_thread_inst_executed_op_hmul_pred_on.sum` |              |
-
-The total runtime for the configuration without profiling was `<gpu_runtime>`.
-
->
-> [!IMPORTANT]
-> Total the number of operations for each category and use the runtime without profiling to get the observed floating
-> point rate. Add that to the table below along with the theoretical rate from the specifications of the GPU being used.
->
-The observed and theoretical floating point rates were:
-
-| Metric                   | MFLOPS                                             |
-|--------------------------|----------------------------------------------------|
-| $R^{GPU}_{theoretrical}$ |                                                    |
-| $R^{GPU}_{observed}$     | $\frac{\sum N_{opers}}{T_{exec}}=$`<gpu_observed>` |
-
-Based on these results, we determined that this software has a score
-of $C^{GPU} = \frac{R_{observed}}{R_{theoretical}}\approx$ `<gpu_score>`. As per the rubric, the metric is classified as
-follows:
-
-| Peak FLOPS proportion     | Description                                                                                                                                                             | Score                            |
-|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| $C_{GPU} \ge$ 0.8         | <span style="background-color: #0080005f">GPU performance does not require further analysis.</span>                                                                     |                                  |
-| 0.8 $\gt C_{GPU} \ge$ 0.6 | <span style="background-color: #ffff005c">GPU performance may require further analysis as it may not be effectively using the hardware to its maximum potential.</span> |                                  |
-| 0.6 $\gt C_{GPU}$         | <span style="background-color: #ff00004e">GPU performance requires in-depth analysis.</span>                                                                            | $C_{GPU} \approx$ `<gpu_metric>` |
-
-> [!IMPORTANT]
-> Place the GPU-performance score in the correct range. Contextualise and elaborate on the classification of the score.
+This analysis is pending whilst we review the GPU metric.
 
 ## 6. I/O Assessment
 
@@ -265,25 +219,41 @@ No I/O assessment was performed, at this time.
 
 ## 7. Summary
 
-The following table collates the results of all above sections. These scores are indicative only, and cannot truly be
-compared to one another meaningfully without taking into account domain knowledge and methodological differences between
-them.
+The following table collates the results of all above sections. These scores
+are indicative only, and cannot truly be compared to one another meaningfully
+without taking into account domain knowledge and methodological differences
+between them.
 
 | Result                                       | Score          | Metric result |
 |----------------------------------------------|----------------|---------------|
 | [Core](#2-core-level-assessment)             | 0.32           | MFLOPS        |
 | [Intra-node (80%)](#3-intra-node-assessment) | 0.015625       | core(s)       |
 | [Inter-node (80%)](#4-inter-node-assessment) | 1.0            | node(s)       |
-| [GPU](#5-gpu-performance-assessment)         | `<gpu_score>`  | MFLOPS        |
-
-> [!IMPORTANT]
-> Use the score table above to generate the spiderweb plot for the summary using the `assessmenttemplate` package and
-the `high-level-plots.py` script.
 
 <img src='images/summary.png' width=500 alt="Summary"/>
 
 ## 8. High-level assessment outcome
 
-> [!IMPORTANT]
-> Comment on the outcome of the high-level assessment. Indicate on which rubrics will be looked into in a low-level
-analysis and why.
+From our high-level metrics we would recommend that the core-level performance
+and intra-node require further investigation as they may be limiting the CPU
+version of QuEST's performance. For core performance we would follow this up by
+first analysing our options in terms of different compilers and optimisation
+flags as it is possible some gains can be found here. Following this, a more
+detailed look into core-level performance, likely at the kernel level, will be
+performed. 
+
+For the intra-node analysis, we have followed the recommendation of 1 rank per
+NUMA domain. However, using the NUMA information from `likwid-topology` and
+`numactl` we see that this dual socket Intel Sapphire Rapids node has 2 NUMA
+domains across the full node. These are hence large NUMA domains and differ
+from the smaller chiplet designs we see on other CPU nodes. Hence, we have two
+avenues to follow next: 1. experiment with the thread and rank placement, as we
+can already see from the high-level, inter-node metric that significant drops
+in runtime can be found from increasing the number of MPI ranks (as the work
+may be two diffuse for the OpenMP thread count); 2. experiment with differ
+CPUs, as it is possible that these smaller chiplet designs (with smaller NUMA
+domains) may better suit this MPI+OpenMP workload. 
+
+Finally, clearly we are currently missing the GPU metrics (both single and
+multi-GPU) from this analysis. These analyses are currently underway both for
+the CUDA and HIP.

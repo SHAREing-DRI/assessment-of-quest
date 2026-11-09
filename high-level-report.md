@@ -54,17 +54,14 @@ All analyses were performed on an exclusive node on DINE2 with the following exa
 #SBATCH --cpus-per-task=16
 #SBATCH --nodes=1
 #SBATCH --exclusive
-#SBATCH --distribution=block:block
 ```
 For intra-node runs, the `--ntasks-per-node` and `--cpus-per-task` values are set to the number of MPI ranks and OpenMP threads respectively. For inter-node runs, the `--nodes` value is varied.
 
-MPI ranks are distributed in a `block:block` configuration. The following directives were used for OpenMP thread distribution:
-
+We control thread/rank affinity and placement via `likwid-mpirun` as follows
 ```bash
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK # Set with --cpus-per-task
-export OMP_PLACES=cores
-export OMP_PROC_BIND=close
+likwid-mpirun -np 2 -mpi openmpi -nperdomain S:1 -t 32 -d ./qft 29
 ```
+This will assign an MPI rank per socket - i.e., 2 ranks for this dual socket system - and associate 32 pinned threads to each rank.
 
 ### 1.3 Base input
 The following is the input configuration used for serial runs:
@@ -116,36 +113,42 @@ Whilst this is higher than the $\approx$ 0.26 without the `BMI2` option enabled,
 
 ## 3. Intra-node assessment
 
-For a high-level analysis of the intra-node performance, we perform a strong scaling by fixing the problem size and increasing core allocation. Note, the benchmark by default performs two runs and times them internally. We check that these times are consistent and then use the second runtime (in seconds) as our **Time** data.
+For a high-level analysis of the intra-node performance, we perform a strong scaling by fixing the problem size and increasing core allocation. Note, the benchmark by default performs two runs and times them internally. We check that these times are consistent and then use the second runtime (in seconds) as our **Time** data below.
 
-| Cores | Ranks | Thread per rank | Time (s) | Parallel efficiency (%) |
-| ----- | ----- | --------------- | -------- | ----------------------- |
-| 1     | 1     | 1               | 400.473  | 1                       |
-| 2     | 1     | 2               | 279.382  | 0.716712                |
-| 4     | 1     | 4               | 267.522  | 0.374243                |
-| 8     | 1     | 8               | 264.053  | 0.18958                 |
-| 16    | 1     | 16              | 263.717  | 0.0949107               |
-| 32    | 1     | 32              | 264.196  | 0.0473693               |
+|   # Cores/threads | Ranks |   Time (s) |   Parallel efficiency (%) |
+|------------------:|------:|-----------:|--------------------------:|
+|                 1 |     1 |   399.911  |                  1        |
+|                 2 |     1 |   205.886  |                  0.971195 |
+|                 4 |     1 |   106.072  |                  0.942546 |
+|                 8 |     1 |    60.8454 |                  0.821572 |
+|                16 |     1 |    36.7202 |                  0.680673 |
+|                32 |     1 |    26.5177 |                  0.471278 |
+|                32 |     2 |    21.196  |                  0.294801 |
 
 <img src='images/intranode.png' width=500 alt="Intranode performance"/>
 
-The 80% threshold is at 1 core and the 60% threshold is at 2 cores. As a proportion of the number of cores available on the node i.e. 64, the scores are:
+For this scaling we follow the submitter's advice and increase the thread count
+until we have filled one NUMA domain (32 cores) and then continue to scale by
+assigning a MPI rank to the next NUMA domain. For this system, each socket of a
+dual socket node is a single NUMA domain.  The 80% threshold is at 8 core and
+the 60% threshold is at 16 cores. As a proportion of the number of cores
+available on the node i.e. 64, the scores are:
 
 $$
-C^{80\\\%}_{intra}=\frac{p^{80\\\%}_{critical,intra}}{p_{max,intra}}=\frac{1}{64}=0.015625
+C^{80\\\%}_{intra}=\frac{p^{80\\\%}_{critical,intra}}{p_{max,intra}}=\frac{8}{64}=0.125
 $$
 
 and
 
 $$
-C^{60\\\%}_{intra}=\frac{p^{60\\\%}_{critical,intra}}{p_{max,intra}}=\frac{2}{64}=0.03125
+C^{60\\\%}_{intra}=\frac{p^{60\\\%}_{critical,intra}}{p_{max,intra}}=\frac{16}{64}=0.25
 $$
 
 | Efficiency                                                 | Description | Score |
 | ---------------------------------------------------------- | ----------- | ----- |
 | $C^{80\\\%}_{intra} \ge$ 0.8                                 | <span style="background-color: #0080005f">Shared memory scaling does not require further analysis.</span> |   |
 | $C^{80\\\%}_{intra} \lt$ 0.8 ^ $C^{60\\\%}\_{intra} \ge$ 0.6    | <span style="background-color: #ffff005c">Shared memory scaling may require analysis; scaling performance may be impacted when porting to newer chips with more cores.</span> |   |
-| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\\\%}_{intra} \approx$ 0.015625 & $C^{60\\\%}\_{intra} \approx$ 0.03125|
+| otherwise                                                  | <span style="background-color: #ff00004e">Shared memory scaling requires in-depth analysis.</span> |$C^{80\\\%}_{intra} \approx$ 0.25 & $C^{60\\\%}\_{intra} \approx$ 0.125|
 
 Based on the classification of the metrics and observations from the parallel efficiency plot, the code demonstrates unfavourable scaling within a node with this configuration. The intra-node performance therefore requires further investigation.
 
@@ -160,13 +163,12 @@ is repeated with the new size for that node count, and the strong scaling
 analysis is continued over the remaining node counts. The step is repeated
 every time the efficiency falls below 60%.
 
-| Nodes | Ranks | Threads per rank | Relative problem size | Time (s) | Parallel efficiency (%) |
-|-------|-------|------------------|-----------------------|----------|-------------------------|
-| 1     | 2     | 32               | 1.0                   | 134.592  | 1                       |
-| 2     | 4     | 32               | 1.0                   | 67.9727  | 0.990045                |
-| 4     | 8     | 32               | 1.0                   | 34.5952  | 0.97262                 |
-| 8     | 16    | 32               | 1.0                   | 267.626  | 0.0628638               |
-| 8     | 16    | 32               | 2.0                   | 36.8884  | 0.912157                |
+|   # Nodes |   Time (s) |   Parallel efficiency (%) |
+|----------:|-----------:|--------------------------:|
+|         1 |   16.0722  |                  1        |
+|         2 |    8.75535 |                  0.91785  |
+|         4 |    5.26717 |                  0.762848 |
+|         8 |    2.5946  |                  0.77431  |
 
 <img src='images/internode.png' width=500 alt="Internode performance"/>
 
@@ -189,7 +191,7 @@ where $\mathbb{C}_{crit}^{60\\\%}$ is the set of processor counts that correspon
 
 | Efficiency                                                                                          | Description                                                                                                    | Score                                                                           |
 |-----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} \approx$ 1.0 & $C^{60\\\%}\_{inter} \approx$ 0.0           |
+| $C^{80\\\%}_{inter} \ge$ 0.8 $.C\_{inter}$ ^ $C^{80\\\%}\_{inter} + C^{60\\\%}\_{inter}=C\_{inter}$ | <span style="background-color: #0080005f">Distributed memory scaling does not require further analysis.</span> | $C^{80\\\%}\_{inter} =$ 0.0 & $C^{60\\\%}\_{inter} =$ 0.0           |
 | $C^{60\\\%}\_{inter} \ge$ 0.6 $.C\_{inter}$                                                         | <span style="background-color: #ffff005c">Distributed memory scaling may require further analysis.</span>      |                                                                                 |
 | otherwise                                                                                           | <span style="background-color: #ff00004e">Distributed memory scaling requires in-depth analysis.</span>        |                                                                                 |
 
@@ -203,13 +205,16 @@ Overall, the inter-node scaling looks very good.
 
 ## 5. GPU-performance assessment
 
-For a high-level analysis of a single GPU's performance, we look for the floating-point operation rate compared to the
-theoretical rate, $R^{GPU}_{theoretical}$ for the GPU, which can be obtained
-from [its specifications](https://www.nvidia.com/en-sg/data-center/h100/).
+For a high-level analysis of a single GPU's performance, we look for the
+floating-point operation rate compared to the theoretical rate,
+$R^{GPU}_{theoretical}$ for the GPU, which can be obtained from [its
+specifications](https://www.nvidia.com/en-sg/data-center/h100/).
 
-To analyse the performance of a single GPU, the code was compiled with the latest version of CUDA and NVHPC available on
-`gn004`. For this metric, the code was run on a single GPU and assigned
-the [input indicated earlier](#13-base-input), though the runtime on GPU is much shorter so we use the largest problem we have available within our memory constraints
+To analyse the performance of a single GPU, the code was compiled with the
+latest version of CUDA and NVHPC available on `gn004`. For this metric, the
+code was run on a single GPU and assigned the [input indicated
+earlier](#13-base-input), though the runtime on GPU is much shorter so we use
+the largest problem we have available within our memory constraints
 
 ```txt
 ./qft 31
@@ -231,7 +236,7 @@ between them.
 | Result                                       | Score          | Metric result |
 |----------------------------------------------|----------------|---------------|
 | [Core](#2-core-level-assessment)             | 0.32           | MFLOPS        |
-| [Intra-node (80%)](#3-intra-node-assessment) | 0.015625       | core(s)       |
+| [Intra-node (80%)](#3-intra-node-assessment) | 0.25           | core(s)       |
 | [Inter-node (80%)](#4-inter-node-assessment) | 1.0            | node(s)       |
 
 <img src='images/summary.png' width=500 alt="Summary"/>

@@ -163,13 +163,14 @@ is repeated with the new size for that node count, and the strong scaling
 analysis is continued over the remaining node counts. The step is repeated
 every time the efficiency falls below 60%.
 
-|   # Nodes |   Time (s) |   Parallel efficiency (%) |
-|----------:|-----------:|--------------------------:|
-|         1 |   16.0722  |                  1        |
-|         2 |    8.75535 |                  0.91785  |
-|         4 |    5.26717 |                  0.762848 |
-|         8 |    2.5946  |                  0.77431  |
-
+|   # Nodes |   Time (s) | Relative problem size |   Parallel efficiency (%) |
+|----------:|-----------:|----------------------:|--------------------------:|
+|         1 |   21.2061  | 1.0                   |                  1        |
+|         2 |   10.3774  | 1.0                   |                  1.02174  |
+|         4 |    5.46812 | 1.0                   |                  0.969533 |
+|         8 |   41.965   | 1.0                   |                  0.063166 |
+|         8 |    6.02498 | 2.0                   |                  0.879924 |
+  
 <img src='images/internode.png' width=500 alt="Internode performance"/>
 
 At 8 nodes, the parallel efficiency fell below 60% and so the problem size was
